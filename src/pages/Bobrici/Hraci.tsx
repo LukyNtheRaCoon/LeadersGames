@@ -10,33 +10,29 @@ const Hraci: React.FC = () => {
       <h2>Přehled hráčů a jejich postupu</h2>
       <div className="players-list">
         {players.map((player) => (
-          <Link to={`/bobrici/hraci/${encodeURIComponent(player.name)}`} key={player.name} className="player-progress-card">
-            <div className="player-rank">
-              <span className="rank-label">Pozice</span>
-              <span className="rank-number">#{player.rank}</span>
-            </div>
+          <Link to={`/bobrici/hraci/${encodeURIComponent(player.name)}`} key={player.name} className="player-row-card">
+            <div className="row-rank">#{player.rank}</div>
+            <div className="row-name">{player.name}</div>
             
-            <div className="player-main-info">
-              <h3 className="player-name">{player.name}</h3>
-              <div className="player-stats">
-                <div className="stat-item">
-                  <span className="stat-label">Splněno</span>
-                  <span className="stat-value">{player.totalCompleted}</span>
-                </div>
-                <div className="stat-item working-on">
-                  <span className="stat-label">Aktuálně pracuje na</span>
-                  <span className="stat-value">
-                    {player.currentTask ? (
-                      <span className="working-badge">{player.currentTask}</span>
-                    ) : (
-                      <span className="no-task">Bez úkolu</span>
-                    )}
-                  </span>
-                </div>
+            <div className="row-stats">
+              <div className="row-stat">
+                <span className="row-label">Splněno:</span>
+                <span className="row-value">{player.totalCompleted}</span>
+              </div>
+              
+              <div className="row-stat row-working">
+                <span className="row-label">Pracuje na:</span>
+                <span className="row-value">
+                  {player.currentTask ? (
+                    <span className="working-pill">{player.currentTask}</span>
+                  ) : (
+                    <span className="no-task-pill">Nic</span>
+                  )}
+                </span>
               </div>
             </div>
 
-            <div className="player-card-arrow">→</div>
+            <div className="row-arrow">→</div>
           </Link>
         ))}
       </div>
