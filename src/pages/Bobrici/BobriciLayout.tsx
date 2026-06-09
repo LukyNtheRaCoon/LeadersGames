@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { getBobriciData } from '../../utils/bobriciUtils';
-import type { PlayerProfile } from '../../utils/bobriciUtils';
+import { getBobriciData, PlayerProfile, BadgeDetail } from '../../utils/bobriciUtils';
+
+interface BobriciContext {
+  players: PlayerProfile[];
+  badgeNames: string[];
+  badgeDetails: BadgeDetail[];
+}
 
 const BobriciLayout: React.FC = () => {
-  const [data, setData] = useState<{ players: PlayerProfile[]; badgeNames: string[] } | null>(null);
+  const [data, setData] = useState<BobriciContext | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +30,6 @@ const BobriciLayout: React.FC = () => {
         <NavLink to="zebricek">Žebříček</NavLink>
       </nav>
       <div className="bobrici-content">
-        {/* Předáme data do Outletu přes context, aby k nim měly přístup podstránky */}
         <Outlet context={data} />
       </div>
     </div>
