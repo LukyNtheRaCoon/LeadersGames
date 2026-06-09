@@ -393,3 +393,119 @@ h1 {
   color: #888;
   margin-top: -0.5rem;
 }
+
+/* Player Progress Cards Redesign */
+.players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 1.5rem;
+}
+
+.player-progress-card {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  background: #1a1d23;
+  border: 1px solid #2d3038;
+  border-radius: 16px;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  gap: 15px;
+}
+
+.player-progress-card:hover {
+  transform: translateX(5px);
+  border-color: #646cff;
+  background: #1f232b;
+}
+
+.player-rank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(100, 108, 255, 0.1);
+  padding: 10px;
+  border-radius: 12px;
+  min-width: 60px;
+}
+
+.rank-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #646cff;
+  font-weight: 800;
+}
+
+.rank-number {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.player-name {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.player-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ddd;
+}
+
+.working-badge {
+  color: #9c27b0;
+  background: rgba(156, 39, 176, 0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(156, 39, 176, 0.2);
+}
+
+.no-task {
+  color: #444;
+  font-style: italic;
+}
+
+.player-card-arrow {
+  font-size: 1.5rem;
+  color: #333;
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .player-progress-card {
+    grid-template-columns: 70px 1fr;
+    padding: 1rem;
+  }
+  .player-card-arrow {
+    display: none;
+  }
+  .player-stats {
+    gap: 15px;
+  }
+}

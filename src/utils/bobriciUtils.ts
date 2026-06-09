@@ -10,7 +10,9 @@ export interface PlayerProfile {
   name: string;
   description: string;
   completedBadges: string[];
+  currentTask: string | null;
   totalCompleted: number;
+  rank?: number;
 }
 
 export interface BadgeDetail {
@@ -28,14 +30,10 @@ export const getBobriciData = async () => {
     fetchSheetData<any>(BOBRICI_UKOLY_URL)
   ]);
   
-  // Odfiltrovat prázdné řádky u hráčů
   const filteredPlayers = rawPlayers.filter(row => row.Jméno);
-
-  // Získat názvy všech bobříků z hlavního listu (všechny sloupce kromě Jméno a Popis)
   const allKeys = Object.keys(filteredPlayers[0] || {});
   const badgeNames = allKeys.filter(key => key !== 'Jméno' && key !== 'Popis');
 
-  // Zpracovat detaily úkolů
   const badgeDetails: BadgeDetail[] = rawUkoly
     .filter((row: any) => row.Název)
     .map((row: any) => ({
@@ -45,17 +43,31 @@ export const getBobriciData = async () => {
     }));
 
   const players: PlayerProfile[] = filteredPlayers.map(row => {
-    const completedBadges = badgeNames.filter(badge => {
-      const val = row[badge]?.toUpperCase();
-      return val === 'ANO' || val === 'X' || val === 'TRUE' || val === '1';
+    const completedBadges: string[] = [];
+    let currentTask: string | null = null;
+
+    badgeNames.forEach(badge => {
+      const status = row[badge]?.toUpperCase().trim();
+      if (status === 'DONE' || status === 'ANO' || status === 'TRUE') {
+        completedBadges.push(badge);
+      } else if (status === 'WORKING') {
+        currentTask = badge;
+      }
     });
 
     return {
       name: row.Jméno,
       description: row.Popis || '',
       completedBadges,
+      currentTask,
       totalCompleted: completedBadges.length
     };
+  });
+
+  // Výpočet ranku (pořadí)
+  const sortedForRank = [...players].sort((a, b) => b.totalCompleted - a.totalCompleted);
+  players.forEach(p => {
+    p.rank = sortedForRank.findIndex(s => s.name === p.name) + 1;
   });
 
   return {
