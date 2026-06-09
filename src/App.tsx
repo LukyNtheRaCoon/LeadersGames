@@ -15,10 +15,13 @@ function App() {
       <div className="app-container">
         <header>
           <nav className="main-nav">
-            <Link to="/">Domů</Link>
-            <Link to="/bobrici">Bobříci</Link>
-            <Link to="/kissing-killer">Kissing Killer</Link>
-            <Link to="/palermo">Palermo</Link>
+            <Link to="/" className="nav-logo">SPT 2. Turnus</Link>
+            <div className="nav-links">
+              <Link to="/">Domů</Link>
+              <Link to="/bobrici">Bobříci</Link>
+              <Link to="/kissing-killer">Kissing Killer</Link>
+              <Link to="/palermo">Palermo</Link>
+            </div>
           </nav>
         </header>
 
@@ -37,8 +40,18 @@ function App() {
           </Routes>
         </main>
 
-        <footer>
-          <p>&copy; {new Date().getFullYear()} Hry pro vedoucí</p>
+        <footer className="main-footer">
+          <div className="footer-content">
+            <div className="footer-info">
+              <p className="made-by">Vyrobeno LukyNkem</p>
+              <p>&copy; {new Date().getFullYear()} SPT 2. Turnus</p>
+            </div>
+            <div className="footer-links">
+              <a href="https://www.sptlomnice.cz/2-turnus" target="_blank" rel="noopener noreferrer">Webovky</a>
+              <a href="https://www.facebook.com/spt.lucane/" target="_blank" rel="noopener noreferrer">Facebook</a>
+              <a href="https://www.instagram.com/spt.lucane/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+          </div>
         </footer>
       </div>
     </HashRouter>
