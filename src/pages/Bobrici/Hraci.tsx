@@ -11,7 +11,6 @@ const Hraci: React.FC = () => {
       <div className="players-list">
         {players.map((player) => (
           <Link to={`/bobrici/hraci/${encodeURIComponent(player.name)}`} key={player.name} className="player-row-card">
-            <div className="row-rank">#{player.rank}</div>
             <div className="row-name">{player.name}</div>
             
             <div className="row-stats">
@@ -32,6 +31,11 @@ const Hraci: React.FC = () => {
               </div>
             </div>
 
+            <div className="row-rank-right">
+              <span className="rank-label-small">Pozice</span>
+              <span className="rank-number-big">#{player.rank}</span>
+            </div>
+            
             <div className="row-arrow">→</div>
           </Link>
         ))}
