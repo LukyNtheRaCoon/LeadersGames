@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import { PlayerProfile } from '../../utils/bobriciUtils';
+import type { PlayerProfile } from '../../utils/bobriciUtils';
 
 const Hraci: React.FC = () => {
   const { players } = useOutletContext<{ players: PlayerProfile[] }>();

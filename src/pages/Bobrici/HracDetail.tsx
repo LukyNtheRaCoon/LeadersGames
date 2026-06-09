@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useOutletContext } from 'react-router-dom';
-import { PlayerProfile } from '../../utils/bobriciUtils';
+import type { PlayerProfile } from '../../utils/bobriciUtils';
 
 const HracDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

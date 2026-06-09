@@ -1,6 +1,5 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { PlayerProfile } from '../../utils/bobriciUtils';
 
 const Ukoly: React.FC = () => {
   const { badgeNames } = useOutletContext<{ badgeNames: string[] }>();

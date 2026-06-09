@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { getBobriciData, PlayerProfile } from '../../utils/bobriciUtils';
+import { NavLink, Outlet } from 'react-router-dom';
+import { getBobriciData } from '../../utils/bobriciUtils';
+import type { PlayerProfile } from '../../utils/bobriciUtils';
 
 const BobriciLayout: React.FC = () => {
   const [data, setData] = useState<{ players: PlayerProfile[]; badgeNames: string[] } | null>(null);
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
 
   useEffect(() => {
     getBobriciData().then(res => {
