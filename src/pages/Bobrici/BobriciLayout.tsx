@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { getBobriciData, PlayerProfile, BadgeDetail } from '../../utils/bobriciUtils';
+import { getBobriciData } from '../../utils/bobriciUtils';
+import type { PlayerProfile, BadgeDetail } from '../../utils/bobriciUtils';
 
 interface BobriciContext {
   players: PlayerProfile[];
