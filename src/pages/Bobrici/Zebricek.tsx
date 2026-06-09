@@ -10,24 +10,26 @@ const Zebricek: React.FC = () => {
   return (
     <div>
       <h2>Celkový žebříček Bobříků</h2>
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th>Pořadí</th>
-            <th>Jméno</th>
-            <th>Počet splněných bobříků</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedPlayers.map((player, index) => (
-            <tr key={player.name}>
-              <td>{index + 1}.</td>
-              <td>{player.name}</td>
-              <td>{player.totalCompleted}</td>
+      <div className="table-wrapper">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Pořadí</th>
+              <th>Jméno</th>
+              <th>Počet splněných bobříků</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedPlayers.map((player, index) => (
+              <tr key={player.name}>
+                <td>{index + 1}.</td>
+                <td>{player.name}</td>
+                <td>{player.totalCompleted}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

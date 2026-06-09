@@ -37,24 +37,26 @@ const KissingKiller: React.FC = () => {
     <div className="game-page">
       <h1>Kissing Killer - Žebříček</h1>
       
-      <table className="data-table">
-        <thead>
-          <tr>
-            <th>Pořadí</th>
-            <th>Jméno</th>
-            <th>Počet vítězství</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((player, index) => (
-            <tr key={index}>
-              <td>{index + 1}.</td>
-              <td>{player.Jméno}</td>
-              <td>{player.Vítězství}</td>
+      <div className="table-wrapper">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Pořadí</th>
+              <th>Jméno</th>
+              <th>Počet vítězství</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((player, index) => (
+              <tr key={index}>
+                <td>{index + 1}.</td>
+                <td>{player.Jméno}</td>
+                <td>{player.Vítězství}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {data.length === 0 && <p>Zatím zde nejsou žádná data.</p>}
     </div>
