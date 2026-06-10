@@ -449,7 +449,7 @@ h1 {
 }
 
 .mobile-only-rank {
-  display: none;
+  display: none !important;
 }
 
 .rank-highlight {
@@ -549,11 +549,12 @@ h1 {
     min-width: 90px;
   }
   .mobile-only-rank {
-    display: flex;
-    margin-top: 2px;
-    padding-top: 4px;
-    border-top: 1px solid #252830;
+  display: flex !important;
+  margin-top: 2px;
+  padding-top: 4px;
+  border-top: 1px solid #252830;
   }
+
   .desktop-only-rank {
     display: none;
   }
