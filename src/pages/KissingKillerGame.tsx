@@ -168,16 +168,6 @@ const KissingKillerGame: React.FC = () => {
             </button>
           </div>
           {adminStatus && <p className="status-message">{adminStatus}</p>}
-          
-          <div className="instructions">
-            <h4>Návod pro nastavení:</h4>
-            <ol>
-              <li>V Google Tabulce jděte na <b>Rozšíření - Apps Script</b>.</li>
-              <li>Vložte kód, který vám pošlu (v chatu).</li>
-              <li>Klikněte na <b>Nasadit - Nové nasazení</b>. Vyberte "Webová aplikace", přístup "Kdokoli".</li>
-              <li>Zkopírujte URL a vložte ji do kódu v <code>KissingKillerGame.tsx</code> jako <code>SCRIPT_URL</code>.</li>
-            </ol>
-          </div>
         </div>
       )}
     </div>
