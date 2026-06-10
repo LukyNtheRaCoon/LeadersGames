@@ -546,7 +546,8 @@ h1 {
     font-size: 0.9rem;
   }
   .row-label {
-    min-width: 90px;
+    min-width: 100px;
+    text-align: left;
   }
   .mobile-only-rank {
   display: flex !important;
