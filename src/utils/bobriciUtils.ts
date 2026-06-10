@@ -3,12 +3,14 @@ import { fetchSheetData } from '../utils/googleSheets';
 export interface BobrikData {
   Jméno: string;
   Popis: string;
-  [key: string]: string; // Pro dynamické sloupce bobříků
+  Fotka?: string;
+  [key: string]: string | undefined;
 }
 
 export interface PlayerProfile {
   name: string;
   description: string;
+  photoUrl: string | null;
   completedBadges: string[];
   currentTask: string | null;
   totalCompleted: number;
@@ -32,7 +34,7 @@ export const getBobriciData = async () => {
   
   const filteredPlayers = rawPlayers.filter(row => row.Jméno);
   const allKeys = Object.keys(filteredPlayers[0] || {});
-  const badgeNames = allKeys.filter(key => key !== 'Jméno' && key !== 'Popis');
+  const badgeNames = allKeys.filter(key => key !== 'Jméno' && key !== 'Popis' && key !== 'Fotka');
 
   const badgeDetails: BadgeDetail[] = rawUkoly
     .filter((row: any) => row.Název)
@@ -58,13 +60,13 @@ export const getBobriciData = async () => {
     return {
       name: row.Jméno,
       description: row.Popis || '',
+      photoUrl: row.Fotka || null,
       completedBadges,
       currentTask,
       totalCompleted: completedBadges.length
     };
   });
 
-  // Výpočet ranku (pořadí)
   const sortedForRank = [...players].sort((a, b) => b.totalCompleted - a.totalCompleted);
   players.forEach(p => {
     p.rank = sortedForRank.findIndex(s => s.name === p.name) + 1;
