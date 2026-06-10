@@ -3,7 +3,6 @@ import { fetchSheetData } from '../utils/googleSheets';
 
 interface PalermoStats {
   Jméno: string;
-  Role: string;
   [key: string]: string | number;
 }
 
@@ -18,11 +17,14 @@ const Palermo: React.FC = () => {
   useEffect(() => {
     fetchSheetData<PalermoStats>(SHEET_URL)
       .then((parsedData) => {
-        const filteredData = parsedData.filter(row => row.Jméno);
-        if (filteredData.length > 0) {
-          setColumns(Object.keys(filteredData[0]));
+        const filteredRows = parsedData.filter(row => row.Jméno);
+        if (filteredRows.length > 0) {
+          // Získat sloupce a vyfiltrovat "Role"
+          const allCols = Object.keys(filteredRows[0]);
+          const filteredCols = allCols.filter(col => col.toLowerCase() !== 'role');
+          setColumns(filteredCols);
         }
-        setData(filteredData);
+        setData(filteredRows);
         setLoading(false);
       })
       .catch((err) => {
@@ -32,28 +34,34 @@ const Palermo: React.FC = () => {
       });
   }, []);
 
+  const renderHeader = (col: string) => {
+    if (col === 'Výhry za Mafii') return 'Výhry za killera';
+    return col;
+  };
+
   if (loading) return <p>Načítám statistiky Palermo...</p>;
   if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="game-page">
       <h1>Palermo - Statistiky</h1>
-      <p>Přehled rolí a úspěšnosti hráčů v legendární hře Palermo.</p>
       
-      <table className="data-table">
-        <thead>
-          <tr>
-            {columns.map(col => <th key={col}>{col}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((row, index) => (
-            <tr key={index}>
-              {columns.map(col => <td key={col}>{row[col]}</td>)}
+      <div className="table-wrapper">
+        <table className="data-table">
+          <thead>
+            <tr>
+              {columns.map(col => <th key={col}>{renderHeader(col)}</th>)}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((row, index) => (
+              <tr key={index}>
+                {columns.map(col => <td key={col}>{row[col]}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {data.length === 0 && <p>Zatím zde nejsou žádná data.</p>}
     </div>
