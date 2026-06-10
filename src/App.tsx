@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import KissingKiller from './pages/KissingKiller';
+import KissingKillerGame from './pages/KissingKillerGame';
 import Palermo from './pages/Palermo';
 import BobriciLayout from './pages/Bobrici/BobriciLayout';
 import Ukoly from './pages/Bobrici/Ukoly';

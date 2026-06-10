@@ -96,7 +96,7 @@ const KissingKillerGame: React.FC = () => {
       }));
 
       // 4. Odeslat do Google Apps Scriptu
-      const response = await fetch(SCRIPT_URL, {
+      await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors', // Důležité pro Apps Script bez CORS
         headers: {
@@ -185,3 +185,4 @@ const KissingKillerGame: React.FC = () => {
 };
 
 export default KissingKillerGame;
+ame;
