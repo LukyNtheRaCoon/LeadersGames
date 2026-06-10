@@ -29,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/kissing-killer" element={<KissingKiller />} />
+            <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
             <Route path="/palermo" element={<Palermo />} />
             <Route path="/bobrici" element={<BobriciLayout />}>
               <Route index element={<Ukoly />} />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchSheetData } from '../utils/googleSheets';
 
 interface PlayerScore {
@@ -35,7 +36,12 @@ const KissingKiller: React.FC = () => {
 
   return (
     <div className="game-page">
-      <h1>Kissing Killer - Žebříček</h1>
+      <h1>Kissing Killer</h1>
+
+      <div className="sub-nav">
+        <Link to="/kissing-killer" className="active">Žebříček</Link>
+        <Link to="/kissing-killer/game">Herní sekce (Cíle)</Link>
+      </div>
       
       <div className="table-wrapper">
         <table className="data-table">
