@@ -432,14 +432,29 @@ h1 {
   font-weight: 700;
   color: #fff;
   font-size: 1.1rem;
-  min-width: 140px;
 }
 
-.row-stats {
+.row-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.row-info-group {
   display: flex;
   align-items: center;
   gap: 25px;
   flex-grow: 1;
+}
+
+.mobile-only-rank {
+  display: none;
+}
+
+.rank-highlight {
+  color: #646cff;
+  font-weight: 800;
 }
 
 .row-rank-right {
@@ -450,6 +465,10 @@ h1 {
   min-width: 60px;
   border-left: 1px solid #2d3038;
   padding-left: 15px;
+}
+
+.desktop-only-rank {
+  display: flex;
 }
 
 .rank-label-small {
@@ -508,22 +527,35 @@ h1 {
 
 @media (max-width: 800px) {
   .player-row-card {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
+    padding: 1rem;
   }
-  .row-name {
-    min-width: 0;
+  .row-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
-  .row-stats {
-    grid-column: 1 / -1;
-    padding-top: 10px;
+  .row-info-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+  }
+  .row-stat {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 0.9rem;
+  }
+  .row-label {
+    min-width: 90px;
+  }
+  .mobile-only-rank {
+    display: flex;
+    margin-top: 2px;
+    padding-top: 4px;
     border-top: 1px solid #252830;
-    gap: 15px;
   }
-  .row-rank-right {
-    border-left: none;
-    padding-left: 0;
+  .desktop-only-rank {
+    display: none;
   }
   .row-arrow {
     display: none;
