@@ -1,6 +1,24 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import type { BadgeDetail } from '../../utils/bobriciUtils';
+
+const listVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const cardVariants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { type: 'spring', stiffness: 80 }
+  }
+};
 
 const Ukoly: React.FC = () => {
   const { badgeDetails, badgeNames } = useOutletContext<{ badgeDetails: BadgeDetail[], badgeNames: string[] }>();
@@ -12,13 +30,22 @@ const Ukoly: React.FC = () => {
   });
 
   return (
-    <div className="ukoly-page">
+    <motion.div 
+      className="ukoly-page"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
       <h2>Seznam bobříků a jejich zkoušek</h2>
       <p className="page-intro">Zde najdeš legendy starých lovců a podmínky pro získání jednotlivých bobříků.</p>
       
-      <div className="ukoly-list">
+      <motion.div 
+        className="ukoly-list"
+        variants={listVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {allBadges.map((badge) => (
-          <div key={badge.name} className="ukol-card">
+          <motion.div key={badge.name} className="ukol-card" variants={cardVariants}>
             <div className="ukol-header">
               <div className="ukol-badge-icon">🦫</div>
               <h3 className="ukol-name">{badge.name}</h3>
@@ -35,10 +62,10 @@ const Ukoly: React.FC = () => {
                 <p>{badge.task}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -1,6 +1,26 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import type { PlayerProfile } from '../../utils/bobriciUtils';
+
+const tableVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05
+    }
+  }
+};
+
+const rowVariants = {
+  hidden: { x: -20, opacity: 0 },
+  visible: {
+    x: 0,
+    opacity: 1,
+    transition: { type: 'spring', stiffness: 120 }
+  }
+};
 
 const Zebricek: React.FC = () => {
   const { players } = useOutletContext<{ players: PlayerProfile[] }>();
@@ -8,7 +28,7 @@ const Zebricek: React.FC = () => {
   const sortedPlayers = [...players].sort((a, b) => b.totalCompleted - a.totalCompleted);
 
   return (
-    <div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <h2>Celkový žebříček Bobříků</h2>
       <div className="table-wrapper">
         <table className="data-table">
@@ -19,18 +39,22 @@ const Zebricek: React.FC = () => {
               <th>Počet splněných bobříků</th>
             </tr>
           </thead>
-          <tbody>
+          <motion.tbody
+            variants={tableVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {sortedPlayers.map((player, index) => (
-              <tr key={player.name}>
+              <motion.tr key={player.name} variants={rowVariants} whileHover={{ backgroundColor: 'rgba(100, 108, 255, 0.1)' }}>
                 <td>{index + 1}.</td>
                 <td>{player.name}</td>
                 <td>{player.totalCompleted}</td>
-              </tr>
+              </motion.tr>
             ))}
-          </tbody>
+          </motion.tbody>
         </table>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
