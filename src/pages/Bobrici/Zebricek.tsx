@@ -1,9 +1,9 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import type { PlayerProfile } from '../../utils/bobriciUtils';
 
-const tableVariants = {
+const tableVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -13,7 +13,7 @@ const tableVariants = {
   }
 };
 
-const rowVariants = {
+const rowVariants: Variants = {
   hidden: { x: -20, opacity: 0 },
   visible: {
     x: 0,

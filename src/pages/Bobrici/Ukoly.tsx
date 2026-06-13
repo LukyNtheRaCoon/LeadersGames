@@ -1,9 +1,9 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import type { BadgeDetail } from '../../utils/bobriciUtils';
 
-const listVariants = {
+const listVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -11,7 +11,7 @@ const listVariants = {
   }
 };
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { y: 30, opacity: 0 },
   visible: {
     y: 0,
