@@ -1,14 +1,24 @@
 import { HashRouter, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import KissingKiller from './pages/KissingKiller';
-import KissingKillerGame from './pages/KissingKillerGame';
-import Palermo from './pages/Palermo';
-import BobriciLayout from './pages/Bobrici/BobriciLayout';
-import Ukoly from './pages/Bobrici/Ukoly';
-import Hraci from './pages/Bobrici/Hraci';
-import HracDetail from './pages/Bobrici/HracDetail';
-import Zebricek from './pages/Bobrici/Zebricek';
+import React, { Suspense } from 'react';
 import './App.css';
+
+// Lazy loading pages
+const Home = React.lazy(() => import('./pages/Home'));
+const KissingKiller = React.lazy(() => import('./pages/KissingKiller'));
+const KissingKillerGame = React.lazy(() => import('./pages/KissingKillerGame'));
+const Palermo = React.lazy(() => import('./pages/Palermo'));
+const BobriciLayout = React.lazy(() => import('./pages/Bobrici/BobriciLayout'));
+const Ukoly = React.lazy(() => import('./pages/Bobrici/Ukoly'));
+const Hraci = React.lazy(() => import('./pages/Bobrici/Hraci'));
+const HracDetail = React.lazy(() => import('./pages/Bobrici/HracDetail'));
+const Zebricek = React.lazy(() => import('./pages/Bobrici/Zebricek'));
+
+// Simple loading fallback
+const LoadingFallback = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', color: '#646cff' }}>
+    <h2>Načítám...</h2>
+  </div>
+);
 
 function App() {
   return (
@@ -27,19 +37,21 @@ function App() {
         </header>
 
         <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/kissing-killer" element={<KissingKiller />} />
-            <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
-            <Route path="/palermo" element={<Palermo />} />
-            <Route path="/bobrici" element={<BobriciLayout />}>
-              <Route index element={<Ukoly />} />
-              <Route path="ukoly" element={<Ukoly />} />
-              <Route path="hraci" element={<Hraci />} />
-              <Route path="hraci/:id" element={<HracDetail />} />
-              <Route path="zebricek" element={<Zebricek />} />
-            </Route>
-          </Routes>
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/kissing-killer" element={<KissingKiller />} />
+              <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
+              <Route path="/palermo" element={<Palermo />} />
+              <Route path="/bobrici" element={<BobriciLayout />}>
+                <Route index element={<Ukoly />} />
+                <Route path="ukoly" element={<Ukoly />} />
+                <Route path="hraci" element={<Hraci />} />
+                <Route path="hraci/:id" element={<HracDetail />} />
+                <Route path="zebricek" element={<Zebricek />} />
+              </Route>
+            </Routes>
+          </Suspense>
         </main>
 
         <footer className="main-footer">
