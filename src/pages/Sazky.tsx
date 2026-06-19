@@ -270,7 +270,7 @@ const Sazky: React.FC = () => {
                       <select 
                         value={selectedTarget} 
                         onChange={(e) => setSelectedTarget(e.target.value)}
-                        style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)', backgroundColor: 'rgba(0,0,0,0.2)', color: 'white' }}
+                        style={{ width: '100%' }}
                         disabled={loading}
                       >
                         <option value="">-- Vyber hráče --</option>

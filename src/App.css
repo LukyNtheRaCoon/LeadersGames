@@ -752,7 +752,8 @@ h1 {
   margin-top: 1rem;
 }
 
-.input-group input {
+.game-page input,
+.game-page select {
   flex-grow: 1;
   padding: 12px 16px;
   border-radius: 10px;
@@ -760,9 +761,21 @@ h1 {
   background: #0f1115;
   color: #fff;
   font-size: 1rem;
+  font-family: inherit;
 }
 
-.input-group button {
+.game-page input:focus,
+.game-page select:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.game-page select option {
+  background: #0f1115;
+  color: #fff;
+}
+
+.game-page button {
   padding: 12px 24px;
   border-radius: 10px;
   border: none;
@@ -771,15 +784,26 @@ h1 {
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: inherit;
 }
 
-.input-group button:hover:not(:disabled) {
+.game-page button:hover:not(:disabled) {
   background: #535bf2;
 }
 
-.input-group button:disabled {
+.game-page button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #2d3038 !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #3f4450 !important;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #3a3f4c !important;
 }
 
 .target-reveal {
