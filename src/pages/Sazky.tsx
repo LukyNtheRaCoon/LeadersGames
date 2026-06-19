@@ -46,26 +46,11 @@ const Sazky: React.FC = () => {
       const res = await fetch(API_URL + '?action=getState');
       const stateData = await res.json();
       
-      let newOdds: Record<string, number> = {};
-      
-      if (stateData.isOpen) {
-        const data = await fetchSheetData<PlayerScore>(PLAYERS_SHEET_URL);
-        const players = data.filter(row => row.Jméno?.trim());
-        const victories = players.map(p => Number(p.Vítězství) || 0);
-        const maxVictories = Math.max(...victories, 0);
-        
-        players.forEach(p => {
-          const v = Number(p.Vítězství) || 0;
-          let calculatedOdds = 1.2 + (maxVictories - v) * 0.6 + 0.6;
-          newOdds[p.Jméno.trim().toLowerCase()] = parseFloat(calculatedOdds.toFixed(2));
-        });
-      }
-      
       setAccounts(stateData.accounts || {});
       setBetState({
         isOpen: stateData.isOpen,
         activeBets: stateData.activeBets || {},
-        odds: newOdds
+        odds: stateData.odds || {}
       });
       setError(null);
     } catch (err) {
@@ -148,12 +133,29 @@ const Sazky: React.FC = () => {
     setAdminStatus(turnOn ? 'Otevírám sázky a počítám kurzy...' : 'Zavírám sázky...');
 
     try {
-      const res = await fetch(`${API_URL}?action=toggleBetting&isOpen=${turnOn}`);
+      let oddsJsonStr = '{}';
+      if (turnOn) {
+        // Admin spočítá kurzy v momentě zapnutí a ty se uloží na server
+        const data = await fetchSheetData<PlayerScore>(PLAYERS_SHEET_URL);
+        const players = data.filter(row => row.Jméno?.trim());
+        const victories = players.map(p => Number(p.Vítězství) || 0);
+        const maxVictories = Math.max(...victories, 0);
+        
+        const newOdds: Record<string, number> = {};
+        players.forEach(p => {
+          const v = Number(p.Vítězství) || 0;
+          let calculatedOdds = 1.2 + (maxVictories - v) * 0.6 + 0.6;
+          newOdds[p.Jméno.trim().toLowerCase()] = parseFloat(calculatedOdds.toFixed(2));
+        });
+        oddsJsonStr = JSON.stringify(newOdds);
+      }
+
+      const res = await fetch(`${API_URL}?action=toggleBetting&isOpen=${turnOn}&oddsJson=${encodeURIComponent(oddsJsonStr)}`);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
 
-      await loadStateAndOdds(); // Znovu načíst vše (včetně kurzů, pokud se zapnuly)
-      setAdminStatus(turnOn ? 'Sázky úspěšně otevřeny!' : 'Sázky byly uzavřeny.');
+      await loadStateAndOdds(); // Znovu načíst vše z nového serverového stavu
+      setAdminStatus(turnOn ? 'Sázky úspěšně otevřeny! Kurzy jsou zamčené.' : 'Sázky byly uzavřeny.');
     } catch (err) {
       console.error(err);
       setAdminStatus('Chyba při komunikaci se serverem.');
