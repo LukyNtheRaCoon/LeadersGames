@@ -4,12 +4,16 @@ export const fetchSheetData = <T>(url: string): Promise<T[]> => {
   return new Promise((resolve, reject) => {
     // Zkusit načíst z cache
     const cacheKey = `sheet_cache_${url}`;
-    const cachedData = sessionStorage.getItem(cacheKey);
+    const cachedItem = sessionStorage.getItem(cacheKey);
     
-    if (cachedData) {
+    if (cachedItem) {
       try {
-        const parsed = JSON.parse(cachedData);
-        return resolve(parsed as T[]);
+        const parsedItem = JSON.parse(cachedItem);
+        const now = new Date().getTime();
+        // 60000 ms = 1 minuta
+        if (parsedItem.timestamp && (now - parsedItem.timestamp < 60000)) {
+          return resolve(parsedItem.data as T[]);
+        }
       } catch (e) {
         console.error("Failed to parse cached data", e);
       }
@@ -19,9 +23,13 @@ export const fetchSheetData = <T>(url: string): Promise<T[]> => {
       download: true,
       header: true,
       complete: (results) => {
-        // Uložit do cache
+        // Uložit do cache s timestampem
         try {
-          sessionStorage.setItem(cacheKey, JSON.stringify(results.data));
+          const cacheData = {
+            timestamp: new Date().getTime(),
+            data: results.data
+          };
+          sessionStorage.setItem(cacheKey, JSON.stringify(cacheData));
         } catch (e) {
           console.error("Failed to save to cache", e);
         }
