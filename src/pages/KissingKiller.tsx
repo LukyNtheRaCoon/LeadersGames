@@ -46,15 +46,16 @@ const KissingKiller: React.FC = () => {
   if (error) return <motion.p className="error" initial="hidden" animate="visible" variants={itemVariants}>{error}</motion.p>;
 
   return (
-    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
-      <motion.h1 variants={itemVariants}>Kissing Killer</motion.h1>
+    <div className="game-page">
+      <h1>Kissing Killer</h1>
 
-      <motion.div variants={itemVariants} className="sub-nav">
+      <div className="sub-nav">
         <Link to="/kissing-killer" className="active">Žebříček</Link>
         <Link to="/kissing-killer/game">Herní sekce (Cíle)</Link>
-      </motion.div>
+      </div>
       
-      <motion.div variants={itemVariants} className="table-wrapper">
+      <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+        <motion.div variants={itemVariants} className="table-wrapper">
         <table className="data-table">
           <thead>
             <tr>
@@ -73,10 +74,11 @@ const KissingKiller: React.FC = () => {
             ))}
           </tbody>
         </table>
-      </motion.div>
+        </motion.div>
 
-      {data.length === 0 && <motion.p variants={itemVariants}>Zatím zde nejsou žádná data.</motion.p>}
-    </motion.div>
+        {data.length === 0 && <motion.p variants={itemVariants}>Zatím zde nejsou žádná data.</motion.p>}
+      </motion.div>
+    </div>
   );
 };
 

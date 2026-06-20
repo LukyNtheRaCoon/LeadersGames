@@ -126,15 +126,16 @@ const KissingKillerGame: React.FC = () => {
   };
 
   return (
-    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
-      <motion.h1 variants={itemVariants}>Kissing Killer</motion.h1>
+    <div className="game-page">
+      <h1>Kissing Killer</h1>
 
-      <motion.div variants={itemVariants} className="sub-nav">
+      <div className="sub-nav">
         <Link to="/kissing-killer">Žebříček</Link>
         <Link to="/kissing-killer/game" className="active">Herní sekce (Cíle)</Link>
-      </motion.div>
+      </div>
 
-      <motion.div variants={itemVariants} className="card">
+      <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+        <motion.div variants={itemVariants} className="card">
         <h2>Koho mám zabít?</h2>
         <div className="input-group">
           <input
@@ -178,9 +179,10 @@ const KissingKillerGame: React.FC = () => {
             </button>
           </div>
           {adminStatus && <p className="status-message">{adminStatus}</p>}
-        </motion.div>
-      )}
-    </motion.div>
+          </motion.div>
+        )}
+      </motion.div>
+    </div>
   );
 };
 
