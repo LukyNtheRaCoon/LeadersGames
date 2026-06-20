@@ -7,6 +7,7 @@ const Home = React.lazy(() => import('./pages/Home'));
 const KissingKiller = React.lazy(() => import('./pages/KissingKiller'));
 const KissingKillerGame = React.lazy(() => import('./pages/KissingKillerGame'));
 const Sazky = React.lazy(() => import('./pages/Sazky'));
+const Andele = React.lazy(() => import('./pages/Andele'));
 const Palermo = React.lazy(() => import('./pages/Palermo'));
 const BobriciLayout = React.lazy(() => import('./pages/Bobrici/BobriciLayout'));
 const Ukoly = React.lazy(() => import('./pages/Bobrici/Ukoly'));
@@ -33,6 +34,7 @@ function App() {
               <Link to="/bobrici">Bobříci</Link>
               <Link to="/kissing-killer">Kissing Killer</Link>
               <Link to="/palermo">Palermo</Link>
+              <Link to="/andele">Andělé</Link>
               <Link to="/sazky">Sázky</Link>
             </div>
           </nav>
@@ -45,6 +47,7 @@ function App() {
               <Route path="/kissing-killer" element={<KissingKiller />} />
               <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
               <Route path="/sazky" element={<Sazky />} />
+              <Route path="/andele" element={<Andele />} />
               <Route path="/palermo" element={<Palermo />} />
               <Route path="/bobrici" element={<BobriciLayout />}>
                 <Route index element={<Ukoly />} />
