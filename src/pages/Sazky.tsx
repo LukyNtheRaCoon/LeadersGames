@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, type Variants } from 'framer-motion';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
+};
 import { fetchSheetData } from '../utils/googleSheets';
 
 interface PlayerScore {
@@ -200,23 +211,22 @@ const Sazky: React.FC = () => {
   const activeBet = activePlayer ? betState.activeBets[activePlayer] : null;
 
   if (initialLoad) {
-    return <div className="game-page"><h2>Načítám data ze serveru...</h2></div>;
+    return <motion.div className="game-page" initial="hidden" animate="visible" variants={itemVariants}><h2>Načítám data ze serveru...</h2></motion.div>;
   }
 
   return (
-    <div className="game-page">
-      <h1>Sázky</h1>
-      <p style={{ textAlign: 'center', marginBottom: '2rem', opacity: 0.8 }}>Vyber si hru, na kterou chceš vsadit.</p>
+    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
+      <motion.h1 variants={itemVariants}>Sázky</motion.h1>
+      <motion.p variants={itemVariants} style={{ textAlign: 'center', marginBottom: '2rem', opacity: 0.8 }}>Vyber si hru, na kterou chceš vsadit.</motion.p>
 
-      <div className="sub-nav">
+      <motion.div variants={itemVariants} className="sub-nav">
         <Link to="/sazky" className="active">Kissing Killer</Link>
         {/* Do budoucna: <Link to="/sazky/palermo">Palermo</Link> */}
-      </div>
+      </motion.div>
 
       {!activePlayer ? (
-        <div className="card">
+        <motion.div variants={itemVariants} className="card">
           <h2>Identifikace sázkaře</h2>
-          <p>Zadej své jméno přesně tak, jak je napsané v žebříčku, abys mohl sázet.</p>
           <div className="input-group">
             <input
               type="text"
@@ -228,9 +238,9 @@ const Sazky: React.FC = () => {
             />
             <button onClick={handleLogin} disabled={loading}>Pokračovat</button>
           </div>
-        </div>
+        </motion.div>
       ) : (
-        <div className="card">
+        <motion.div variants={itemVariants} className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <h2>Vítej, {playerNameInput}!</h2>
             <button onClick={() => setActivePlayer(null)} className="btn-secondary" style={{ padding: '0.5rem' }}>Změnit hráče</button>
@@ -309,16 +319,16 @@ const Sazky: React.FC = () => {
               )}
             </div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {/* Admin Sekce */}
-      <div className="admin-trigger" onClick={() => setShowAdmin(!showAdmin)} style={{ marginTop: '2rem' }}>
+      <motion.div variants={itemVariants} className="admin-trigger" onClick={() => setShowAdmin(!showAdmin)} style={{ marginTop: '2rem' }}>
         {showAdmin ? 'Skrýt admin sekci' : 'Admin sekce (Správa sázek)'}
-      </div>
+      </motion.div>
 
       {showAdmin && (
-        <div className="card admin-card">
+        <motion.div variants={itemVariants} className="card admin-card">
           <h3>Správa sázek</h3>
           
           <div className="input-group" style={{ marginBottom: '1rem' }}>
@@ -349,7 +359,6 @@ const Sazky: React.FC = () => {
 
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem', marginTop: '1rem' }}>
             <h4>Vyhodnocení</h4>
-            <p className="hint">Zadej jméno výherce (malými písmeny nebo přesně jak je v systému) a vyhodnoť sázky. Tím se přičtou body výhercům a sázky se smažou.</p>
             <div className="input-group">
               <input
                 type="text"
@@ -365,9 +374,9 @@ const Sazky: React.FC = () => {
           </div>
 
           {adminStatus && <p className="status-message">{adminStatus}</p>}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -85,6 +85,36 @@ const Home: React.FC = () => {
             <span className="card-action">Statistiky →</span>
           </div>
         </MotionLink>
+
+        <MotionLink 
+          to="/sazky" 
+          className="game-card sazky-card"
+          variants={itemVariants}
+          whileHover={{ y: -5, scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="card-icon">💸</div>
+          <div className="card-content">
+            <h2>Sázky</h2>
+            <p>Vsaď si své nasbírané body na vítěze her.</p>
+            <span className="card-action">Vsadit si →</span>
+          </div>
+        </MotionLink>
+
+        <MotionLink 
+          to="/andele" 
+          className="game-card andele-card"
+          variants={itemVariants}
+          whileHover={{ y: -5, scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="card-icon">👼</div>
+          <div className="card-content">
+            <h2>Andělé</h2>
+            <p>Zjisti komu děláš tajného anděla.</p>
+            <span className="card-action">Můj cíl →</span>
+          </div>
+        </MotionLink>
       </motion.div>
     </motion.div>
   );

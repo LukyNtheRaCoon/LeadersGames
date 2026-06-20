@@ -1,4 +1,15 @@
 import React, { useState } from 'react';
+import { motion, type Variants } from 'framer-motion';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
+};
 
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbx0oXQIi_MquxV1p8eC10MksREJyBo3PxK86IdFAazSzpfzPUol8ICMD_uf8uLA1C4M/exec';
@@ -70,10 +81,10 @@ const Andele: React.FC = () => {
   };
 
   return (
-    <div className="game-page">
-      <h1>Andělé</h1>
+    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
+      <motion.h1 variants={itemVariants}>Andělé</motion.h1>
 
-      <div className="card">
+      <motion.div variants={itemVariants} className="card">
         <h2>Komu dělám anděla?</h2>
         <div className="input-group">
           <input
@@ -97,16 +108,15 @@ const Andele: React.FC = () => {
         )}
 
         {error && <p className="error-message">{error}</p>}
-      </div>
+      </motion.div>
 
-      <div className="admin-trigger" onClick={() => setShowAdmin(!showAdmin)}>
+      <motion.div variants={itemVariants} className="admin-trigger" onClick={() => setShowAdmin(!showAdmin)}>
         {showAdmin ? 'Skrýt admin sekci' : 'Admin sekce (Generovat Anděly)'}
-      </div>
+      </motion.div>
 
       {showAdmin && (
-        <div className="card admin-card">
+        <motion.div variants={itemVariants} className="card admin-card">
           <h3>Generovat hru Andělé</h3>
-          <p className="hint">Tlačítko zamíchá všechny hráče v listu "Andele_Hraci" a vytvoří kruh (A dělá anděla B, B dělá anděla C...). Stará hra se přepíše.</p>
           <div className="input-group">
             <input
               type="password"
@@ -120,9 +130,9 @@ const Andele: React.FC = () => {
             </button>
           </div>
           {adminStatus && <p className="status-message">{adminStatus}</p>}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

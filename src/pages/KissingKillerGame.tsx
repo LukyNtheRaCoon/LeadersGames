@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, type Variants } from 'framer-motion';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
+};
 import { fetchSheetData } from '../utils/googleSheets';
 
 interface Assignment {
@@ -115,15 +126,15 @@ const KissingKillerGame: React.FC = () => {
   };
 
   return (
-    <div className="game-page">
-      <h1>Kissing Killer</h1>
+    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
+      <motion.h1 variants={itemVariants}>Kissing Killer</motion.h1>
 
-      <div className="sub-nav">
+      <motion.div variants={itemVariants} className="sub-nav">
         <Link to="/kissing-killer">Žebříček</Link>
         <Link to="/kissing-killer/game" className="active">Herní sekce (Cíle)</Link>
-      </div>
+      </motion.div>
 
-      <div className="card">
+      <motion.div variants={itemVariants} className="card">
         <h2>Koho mám zabít?</h2>
         <div className="input-group">
           <input
@@ -146,16 +157,15 @@ const KissingKillerGame: React.FC = () => {
         )}
 
         {error && <p className="error-message">{error}</p>}
-      </div>
+      </motion.div>
 
-      <div className="admin-trigger" onClick={() => setShowAdmin(!showAdmin)}>
+      <motion.div variants={itemVariants} className="admin-trigger" onClick={() => setShowAdmin(!showAdmin)}>
         {showAdmin ? 'Skrýt admin sekci' : 'Admin sekce (Generovat hru)'}
-      </div>
+      </motion.div>
 
       {showAdmin && (
-        <div className="card admin-card">
+        <motion.div variants={itemVariants} className="card admin-card">
           <h3>Generovat novou hru</h3>
-          <p className="hint">Toto zamíchá všechny hráče a přiřadí jim nové cíle.</p>
           <div className="input-group">
             <input
               type="password"
@@ -168,9 +178,9 @@ const KissingKillerGame: React.FC = () => {
             </button>
           </div>
           {adminStatus && <p className="status-message">{adminStatus}</p>}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

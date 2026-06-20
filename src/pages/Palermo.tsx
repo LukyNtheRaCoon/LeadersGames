@@ -1,4 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { motion, type Variants } from 'framer-motion';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
+};
 import { fetchSheetData } from '../utils/googleSheets';
 
 interface PalermoStats {
@@ -39,14 +50,14 @@ const Palermo: React.FC = () => {
     return col;
   };
 
-  if (loading) return <p>Načítám statistiky Palermo...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (loading) return <motion.p initial="hidden" animate="visible" variants={itemVariants}>Načítám statistiky Palermo...</motion.p>;
+  if (error) return <motion.p className="error" initial="hidden" animate="visible" variants={itemVariants}>{error}</motion.p>;
 
   return (
-    <div className="game-page">
-      <h1>Palermo - Statistiky</h1>
+    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
+      <motion.h1 variants={itemVariants}>Palermo - Statistiky</motion.h1>
       
-      <div className="table-wrapper">
+      <motion.div variants={itemVariants} className="table-wrapper">
         <table className="data-table">
           <thead>
             <tr>
@@ -61,10 +72,10 @@ const Palermo: React.FC = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
-      {data.length === 0 && <p>Zatím zde nejsou žádná data.</p>}
-    </div>
+      {data.length === 0 && <motion.p variants={itemVariants}>Zatím zde nejsou žádná data.</motion.p>}
+    </motion.div>
   );
 };
 

@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, type Variants } from 'framer-motion';
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants: Variants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
+};
 import { fetchSheetData } from '../utils/googleSheets';
 
 interface PlayerScore {
@@ -31,19 +42,19 @@ const KissingKiller: React.FC = () => {
       });
   }, []);
 
-  if (loading) return <p>Načítám žebříček...</p>;
-  if (error) return <p className="error">{error}</p>;
+  if (loading) return <motion.p initial="hidden" animate="visible" variants={itemVariants}>Načítám žebříček...</motion.p>;
+  if (error) return <motion.p className="error" initial="hidden" animate="visible" variants={itemVariants}>{error}</motion.p>;
 
   return (
-    <div className="game-page">
-      <h1>Kissing Killer</h1>
+    <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
+      <motion.h1 variants={itemVariants}>Kissing Killer</motion.h1>
 
-      <div className="sub-nav">
+      <motion.div variants={itemVariants} className="sub-nav">
         <Link to="/kissing-killer" className="active">Žebříček</Link>
         <Link to="/kissing-killer/game">Herní sekce (Cíle)</Link>
-      </div>
+      </motion.div>
       
-      <div className="table-wrapper">
+      <motion.div variants={itemVariants} className="table-wrapper">
         <table className="data-table">
           <thead>
             <tr>
@@ -62,10 +73,10 @@ const KissingKiller: React.FC = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
-      {data.length === 0 && <p>Zatím zde nejsou žádná data.</p>}
-    </div>
+      {data.length === 0 && <motion.p variants={itemVariants}>Zatím zde nejsou žádná data.</motion.p>}
+    </motion.div>
   );
 };
 
