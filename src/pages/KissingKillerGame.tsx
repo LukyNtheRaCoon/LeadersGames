@@ -11,7 +11,8 @@ const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
 };
-import { fetchSheetData } from '../utils/googleSheets';
+import { fetchSheetData, isPlayerActive } from '../utils/googleSheets';
+
 
 interface Assignment {
   'Jméno': string;
@@ -40,6 +41,25 @@ const KissingKillerGame: React.FC = () => {
   const [showAdmin, setShowAdmin] = useState(false);
   const [password, setPassword] = useState('');
   const [adminStatus, setAdminStatus] = useState<string | null>(null);
+  const [playersList, setPlayersList] = useState<any[]>([]);
+  const [loadingPlayers, setLoadingPlayers] = useState(false);
+
+  React.useEffect(() => {
+    if (showAdmin) {
+      const loadPlayers = async () => {
+        setLoadingPlayers(true);
+        try {
+          const data = await fetchSheetData<any>(PLAYERS_SHEET_URL);
+          setPlayersList(data.filter(p => p['Jméno'] && p['Jméno'].trim() !== ''));
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoadingPlayers(false);
+        }
+      };
+      loadPlayers();
+    }
+  }, [showAdmin]);
 
   const handleCheckTarget = async () => {
     if (!playerName.trim()) return;
@@ -82,13 +102,14 @@ const KissingKillerGame: React.FC = () => {
 
     try {
       // 1. Načíst hráče
-      const playersData = await fetchSheetData<Player>(PLAYERS_SHEET_URL);
-      const players = playersData
+      const playersData = await fetchSheetData<any>(PLAYERS_SHEET_URL);
+      const activePlayers = playersData.filter(isPlayerActive);
+      const players = activePlayers
         .map(p => p['Jméno'])
         .filter(name => name && name.trim() !== '');
 
       if (players.length < 2) {
-        setAdminStatus('Nedostatek hráčů pro generování (alespoň 2).');
+        setAdminStatus('Nedostatek aktivních hráčů pro generování (alespoň 2).');
         setLoading(false);
         return;
       }
@@ -115,6 +136,9 @@ const KissingKillerGame: React.FC = () => {
         },
         body: JSON.stringify(assignments),
       });
+
+      // Update the local list as well if we have it loaded
+      setPlayersList(playersData.filter(p => p['Jméno'] && p['Jméno'].trim() !== ''));
 
       setAdminStatus('Úspěšně vygenerováno a odesláno do tabulky!');
     } catch (err) {
@@ -167,6 +191,24 @@ const KissingKillerGame: React.FC = () => {
       {showAdmin && (
         <motion.div variants={itemVariants} className="card admin-card">
           <h3>Generovat novou hru</h3>
+          
+          {loadingPlayers ? (
+            <p className="hint">Načítám přehled hráčů...</p>
+          ) : playersList.length > 0 ? (
+            <div className="players-overview">
+              <p>
+                <strong>Hrající hráči ({playersList.filter(isPlayerActive).length}):</strong>{' '}
+                {playersList.filter(isPlayerActive).map(p => p['Jméno']).join(', ') || 'Žádní'}
+              </p>
+              {playersList.filter(p => !isPlayerActive(p)).length > 0 && (
+                <p className="inactive-players-list">
+                  <strong>Neaktivní/nepřítomní ({playersList.filter(p => !isPlayerActive(p)).length}):</strong>{' '}
+                  {playersList.filter(p => !isPlayerActive(p)).map(p => p['Jméno']).join(', ')}
+                </p>
+              )}
+            </div>
+          ) : null}
+
           <div className="input-group">
             <input
               type="password"

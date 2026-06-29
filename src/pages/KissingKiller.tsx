@@ -11,11 +11,12 @@ const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
 };
-import { fetchSheetData } from '../utils/googleSheets';
+import { fetchSheetData, isPlayerActive } from '../utils/googleSheets';
 
 interface PlayerScore {
   Jméno: string;
   Vítězství: string | number;
+  [key: string]: any;
 }
 
 const KissingKiller: React.FC = () => {
@@ -65,13 +66,21 @@ const KissingKiller: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((player, index) => (
-              <tr key={index}>
-                <td>{index + 1}.</td>
-                <td>{player.Jméno}</td>
-                <td>{player.Vítězství}</td>
-              </tr>
-            ))}
+            {data.map((player, index) => {
+              const active = isPlayerActive(player);
+              return (
+                <tr key={index} className={!active ? 'player-inactive' : ''}>
+                  <td>{index + 1}.</td>
+                  <td>
+                    <span className="player-name-cell">
+                      {player.Jméno}
+                      {!active && <span className="status-badge inactive">Nepřítomen</span>}
+                    </span>
+                  </td>
+                  <td>{player.Vítězství}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         </motion.div>

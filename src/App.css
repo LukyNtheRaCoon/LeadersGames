@@ -896,8 +896,59 @@ h1 {
   margin-bottom: 8px;
 }
 
+/* Kissing Killer Present/Absent Styling */
+.player-name-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.status-badge.inactive {
+  background: rgba(255, 82, 82, 0.15);
+  color: #ff5252;
+  border: 1px solid rgba(255, 82, 82, 0.3);
+}
+
+.player-inactive td {
+  opacity: 0.55;
+  color: #777;
+}
+
+.players-overview {
+  margin: 15px 0 20px 0;
+  padding: 15px;
+  background: #0f1115;
+  border: 1px solid #2d3038;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.players-overview p {
+  margin: 6px 0;
+  line-height: 1.45;
+}
+
+.inactive-players-list {
+  color: #ff5252;
+  border-top: 1px solid #2d3038;
+  padding-top: 8px;
+  margin-top: 8px !important;
+}
+
 @media (max-width: 600px) {
   .input-group {
     flex-direction: column;
   }
 }
+
