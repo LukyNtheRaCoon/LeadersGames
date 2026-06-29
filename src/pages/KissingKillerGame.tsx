@@ -19,10 +19,6 @@ interface Assignment {
   'Cíl': string;
 }
 
-interface Player {
-  'Jméno': string;
-}
-
 const ADMIN_PASSWORD = 'Adminlukyn';
 // URL pro načítání cílů (CSV export listu "Cíle")
 const TARGETS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmqUKCHAlxxLLpWDcnXtORybXgZ5VMPGChg6xJaiLYKe1LmJQ9m27Oop-9DnERjS0edGeXZLr7xU0k/pub?gid=50884432&single=true&output=csv'; 
