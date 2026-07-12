@@ -1,14 +1,19 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 
-const itemVariants = {
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+};
+
+const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
 };
 
 const PravidlaBobrici: React.FC = () => {
   return (
-    <motion.div className="rules-container card" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
+    <motion.div className="rules-container card" initial="hidden" animate="visible" variants={containerVariants}>
       <motion.h2 variants={itemVariants} style={{ marginBottom: '1.5rem', color: 'var(--primary-color)' }}>
         Pravidla hry Bobříci
       </motion.h2>
