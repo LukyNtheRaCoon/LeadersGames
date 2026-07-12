@@ -29,6 +29,7 @@ const BobriciLayout: React.FC = () => {
         <NavLink to="ukoly" end>Seznam úkolů</NavLink>
         <NavLink to="hraci">Seznam hráčů</NavLink>
         <NavLink to="zebricek">Žebříček</NavLink>
+        <NavLink to="pravidla">Pravidla</NavLink>
       </nav>
       <div className="bobrici-content">
         <Outlet context={data} />

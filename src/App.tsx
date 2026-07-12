@@ -14,6 +14,10 @@ const Ukoly = React.lazy(() => import('./pages/Bobrici/Ukoly'));
 const Hraci = React.lazy(() => import('./pages/Bobrici/Hraci'));
 const HracDetail = React.lazy(() => import('./pages/Bobrici/HracDetail'));
 const Zebricek = React.lazy(() => import('./pages/Bobrici/Zebricek'));
+const PravidlaBobrici = React.lazy(() => import('./pages/Bobrici/PravidlaBobrici'));
+const PravidlaKissingKiller = React.lazy(() => import('./pages/PravidlaKissingKiller'));
+const PravidlaPalermo = React.lazy(() => import('./pages/PravidlaPalermo'));
+const PravidlaAndele = React.lazy(() => import('./pages/PravidlaAndele'));
 const HraciTopLayout = React.lazy(() => import('./pages/HraciTopLayout'));
 
 // Simple loading fallback
@@ -48,15 +52,19 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/kissing-killer" element={<KissingKiller />} />
               <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
+              <Route path="/kissing-killer/pravidla" element={<PravidlaKissingKiller />} />
               <Route path="/sazky" element={<Sazky />} />
               <Route path="/andele" element={<Andele />} />
+              <Route path="/andele/pravidla" element={<PravidlaAndele />} />
               <Route path="/palermo" element={<Palermo />} />
+              <Route path="/palermo/pravidla" element={<PravidlaPalermo />} />
               <Route path="/bobrici" element={<BobriciLayout />}>
                 <Route index element={<Ukoly />} />
                 <Route path="ukoly" element={<Ukoly />} />
                 <Route path="hraci" element={<Hraci />} />
                 <Route path="hraci/:id" element={<HracDetail />} />
                 <Route path="zebricek" element={<Zebricek />} />
+                <Route path="pravidla" element={<PravidlaBobrici />} />
               </Route>
               <Route path="/hraci" element={<HraciTopLayout />}>
                 <Route index element={<Hraci />} />

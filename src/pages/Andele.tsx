@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 
 const containerVariants: Variants = {
@@ -83,6 +84,11 @@ const Andele: React.FC = () => {
   return (
     <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
       <motion.h1 variants={itemVariants}>Andělé</motion.h1>
+
+      <motion.div variants={itemVariants} className="sub-nav">
+        <Link to="/andele" className="active">Hra</Link>
+        <Link to="/andele/pravidla">Pravidla</Link>
+      </motion.div>
 
       <motion.div variants={itemVariants} className="card">
         <h2>Komu dělám anděla?</h2>

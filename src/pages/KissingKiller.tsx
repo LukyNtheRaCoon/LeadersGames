@@ -53,6 +53,7 @@ const KissingKiller: React.FC = () => {
       <div className="sub-nav">
         <Link to="/kissing-killer" className="active">Žebříček</Link>
         <Link to="/kissing-killer/game">Herní sekce (Cíle)</Link>
+        <Link to="/kissing-killer/pravidla">Pravidla</Link>
       </div>
       
       <motion.div initial="hidden" animate="visible" variants={containerVariants}>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 
 const containerVariants: Variants = {
@@ -56,6 +57,11 @@ const Palermo: React.FC = () => {
   return (
     <motion.div className="game-page" initial="hidden" animate="visible" variants={containerVariants}>
       <motion.h1 variants={itemVariants}>Palermo - Statistiky</motion.h1>
+
+      <motion.div variants={itemVariants} className="sub-nav">
+        <Link to="/palermo" className="active">Statistiky</Link>
+        <Link to="/palermo/pravidla">Pravidla</Link>
+      </motion.div>
       
       <motion.div variants={itemVariants} className="table-wrapper">
         <table className="data-table">
