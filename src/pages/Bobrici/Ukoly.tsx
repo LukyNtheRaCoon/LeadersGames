@@ -25,7 +25,12 @@ const Ukoly: React.FC = () => {
 
   // Pokud úkol není v seznamu detailů, vytvoříme pro něj aspoň základní kartu
   const allBadges = badgeNames.map(name => {
-    const detail = badgeDetails.find(d => d.name === name);
+    const detail = badgeDetails.find(d => {
+      // Normalizujeme názvy pro bezpečnější porovnání (odstraníme čísla na začátku)
+      const norm1 = name.replace(/^\d+\.\s*/, '').trim().toLowerCase();
+      const norm2 = d.name.replace(/^\d+\.\s*/, '').trim().toLowerCase();
+      return norm1 === norm2;
+    });
     return detail || { name, story: 'Tento bobřík čeká na svůj příběh...', task: 'Úkol zatím nebyl definován.' };
   });
 

@@ -1,5 +1,19 @@
 import { fetchSheetData } from '../utils/googleSheets';
 
+const formatImageUrl = (url: string | undefined): string | null => {
+  if (!url) return null;
+  
+  // Převede klasický odkaz z Google Disku na přímý odkaz pro obrázek
+  const driveRegex = /drive\.google\.com\/(?:file\/d\/|open\?id=)([a-zA-Z0-9_-]+)/;
+  const match = url.match(driveRegex);
+  
+  if (match && match[1]) {
+    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+  }
+  
+  return url;
+};
+
 export interface BobrikData {
   Jméno: string;
   Popis: string;
@@ -60,7 +74,7 @@ export const getBobriciData = async () => {
     return {
       name: row.Jméno,
       description: row.Popis || '',
-      photoUrl: row.Fotka || null,
+      photoUrl: formatImageUrl(row.Fotka),
       completedBadges,
       currentTask,
       totalCompleted: completedBadges.length
