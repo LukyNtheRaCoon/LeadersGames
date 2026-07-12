@@ -42,6 +42,21 @@ const Home: React.FC = () => {
 
       <motion.div className="game-links" variants={containerVariants}>
         <MotionLink 
+          to="/hraci" 
+          className="game-card hraci-card"
+          variants={itemVariants}
+          whileHover={{ y: -5, scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="card-icon">👥</div>
+          <div className="card-content">
+            <h2>Hráči</h2>
+            <p>Profily všech hráčů, jejich úspěchy a postup ve hrách.</p>
+            <span className="card-action">Seznam hráčů →</span>
+          </div>
+        </MotionLink>
+
+        <MotionLink 
           to="/bobrici" 
           className="game-card bobrici-card"
           variants={itemVariants}

@@ -14,6 +14,7 @@ const Ukoly = React.lazy(() => import('./pages/Bobrici/Ukoly'));
 const Hraci = React.lazy(() => import('./pages/Bobrici/Hraci'));
 const HracDetail = React.lazy(() => import('./pages/Bobrici/HracDetail'));
 const Zebricek = React.lazy(() => import('./pages/Bobrici/Zebricek'));
+const HraciTopLayout = React.lazy(() => import('./pages/HraciTopLayout'));
 
 // Simple loading fallback
 const LoadingFallback = () => (
@@ -31,6 +32,7 @@ function App() {
             <Link to="/" className="nav-logo">SPT 2. Turnus</Link>
             <div className="nav-links">
               <Link to="/">Domů</Link>
+              <Link to="/hraci">Hráči</Link>
               <Link to="/bobrici">Bobříci</Link>
               <Link to="/kissing-killer">Kissing Killer</Link>
               <Link to="/palermo">Palermo</Link>
@@ -55,6 +57,10 @@ function App() {
                 <Route path="hraci" element={<Hraci />} />
                 <Route path="hraci/:id" element={<HracDetail />} />
                 <Route path="zebricek" element={<Zebricek />} />
+              </Route>
+              <Route path="/hraci" element={<HraciTopLayout />}>
+                <Route index element={<Hraci />} />
+                <Route path=":id" element={<HracDetail />} />
               </Route>
             </Routes>
           </Suspense>

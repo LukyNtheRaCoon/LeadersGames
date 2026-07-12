@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext, useLocation } from 'react-router-dom';
 import type { PlayerProfile } from '../../utils/bobriciUtils';
 
 const Hraci: React.FC = () => {
   const { players } = useOutletContext<{ players: PlayerProfile[] }>();
+  const location = useLocation();
+  const basePath = location.pathname.startsWith('/bobrici') ? '/bobrici/hraci' : '/hraci';
 
   return (
     <div className="players-page">
       <h2>Přehled hráčů a jejich postupu</h2>
       <div className="players-list">
         {players.map((player) => (
-          <Link to={`/bobrici/hraci/${encodeURIComponent(player.name)}`} key={player.name} className="player-row-card">
+          <Link to={`${basePath}/${encodeURIComponent(player.name)}`} key={player.name} className="player-row-card">
             <div className="row-content">
               <div className="row-name">{player.name}</div>
               
