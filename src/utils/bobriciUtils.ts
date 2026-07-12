@@ -8,7 +8,8 @@ const formatImageUrl = (url: string | undefined): string | null => {
   const match = url.match(driveRegex);
   
   if (match && match[1]) {
-    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+    // Využíváme novější lh3.googleusercontent.com formát, který spolehlivě funguje v <img> tazích bez blokování
+    return `https://lh3.googleusercontent.com/d/${match[1]}`;
   }
   
   return url;
