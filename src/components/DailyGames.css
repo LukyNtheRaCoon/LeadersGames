@@ -1,0 +1,104 @@
+.daily-games-container {
+  background: linear-gradient(145deg, rgba(100, 108, 255, 0.1), rgba(156, 39, 176, 0.05));
+  border: 1px solid rgba(100, 108, 255, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  margin: 0 auto 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.daily-games-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.daily-games-icon {
+  font-size: 1.8rem;
+  background: rgba(100, 108, 255, 0.2);
+  padding: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.daily-games-header h3 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(90deg, #646cff, #9c27b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.daily-games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.daily-game-item {
+  background: #1a1d23;
+  border: 1px solid #2d3038;
+  border-radius: 14px;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.daily-game-item:hover {
+  transform: translateX(5px);
+  border-color: #646cff;
+  background: #1f232b;
+}
+
+.daily-game-time {
+  font-weight: 800;
+  color: #646cff;
+  font-size: 1.1rem;
+  background: rgba(100, 108, 255, 0.1);
+  padding: 8px 14px;
+  border-radius: 10px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.daily-game-info {
+  flex-grow: 1;
+}
+
+.daily-game-info h4 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.daily-game-info p {
+  margin: 0;
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .daily-games-container {
+    padding: 1.5rem;
+  }
+  
+  .daily-game-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 1rem;
+  }
+  
+  .daily-game-time {
+    font-size: 0.95rem;
+    padding: 4px 10px;
+  }
+}

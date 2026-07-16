@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 
+import DailyGames from '../components/DailyGames';
+
 // Casting Link to any fixes the "No overload matches this call" when passing specific props
 const MotionLink = motion.create(Link as any);
 
@@ -39,6 +41,8 @@ const Home: React.FC = () => {
           Tento web slouží jako centrální přehled výsledků, úkolů a statistik pro naše oblíbené hry.
         </p>
       </motion.section>
+
+      <DailyGames />
 
       <motion.div className="game-links" variants={containerVariants}>
         <MotionLink 
