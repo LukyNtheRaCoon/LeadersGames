@@ -36,14 +36,20 @@ const DailyGames: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmqUKCHAlxxLLpWDcnXtORybXgZ5VMPGChg6xJaiLYKe1LmJQ9m27Oop-9DnERjS0edGeXZLr7xU0k/pub?gid=1869098752&single=true&output=csv";
+    // Přidáváme náhodné číslo nakonec (cache buster), aby Google nevracel stará data z mezipaměti
+    const cacheBuster = new Date().getTime();
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSmqUKCHAlxxLLpWDcnXtORybXgZ5VMPGChg6xJaiLYKe1LmJQ9m27Oop-9DnERjS0edGeXZLr7xU0k/pub?gid=1869098752&single=true&output=csv&t=${cacheBuster}`;
 
     Papa.parse<GameSchedule>(sheetUrl, {
       download: true,
       header: true,
+      skipEmptyLines: true,
       complete: (results) => {
         const todaysGames = results.data.filter(game => {
-          return game.Datum && game.Hra && isToday(game.Datum);
+          // Ujistíme se, že máme datum i hru, a zbavíme se zbytečných mezer
+          const datum = game.Datum ? game.Datum.trim() : '';
+          const hra = game.Hra ? game.Hra.trim() : '';
+          return datum && hra && isToday(datum);
         });
         setGames(todaysGames);
         setLoading(false);
@@ -56,32 +62,22 @@ const DailyGames: React.FC = () => {
     });
   }, []);
 
-  if (loading) return null; // Nebudeme rušit layout při načítání
-  if (error) return null; // V případě chyby prostě sekci nezobrazíme
-  if (games.length === 0) return null; // Pokud se dnes nic nehraje, sekci skryjeme
+  if (loading) return null;
+  if (error) return null;
+  if (games.length === 0) return null;
+
+  // Sloučíme všechny dnešní hry do jednoho řetězce (oddělené čárkou a mezerou)
+  const allGamesString = games.map(g => g.Hra.trim()).join(', ');
 
   return (
     <motion.div 
-      className="daily-games-container"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
+      className="daily-games-banner"
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 20 }}
     >
-      <div className="daily-games-header">
-        <span className="daily-games-icon">📅</span>
-        <h3>Dnes se hraje</h3>
-      </div>
-      <div className="daily-games-list">
-        {games.map((game, index) => (
-          <div key={index} className="daily-game-item">
-            {game.Cas && <div className="daily-game-time">{game.Cas}</div>}
-            <div className="daily-game-info">
-              <h4>{game.Hra}</h4>
-              {game.Popis && <p>{game.Popis}</p>}
-            </div>
-          </div>
-        ))}
-      </div>
+      <span className="daily-games-label">📅 Dnes se hraje:</span>
+      <span className="daily-games-list">{allGamesString}</span>
     </motion.div>
   );
 };
