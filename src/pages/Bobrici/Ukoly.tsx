@@ -1,7 +1,7 @@
 import React from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
-import type { BadgeDetail } from '../../utils/bobriciUtils';
+import type { BadgeDetail, PlayerProfile } from '../../utils/bobriciUtils';
 
 const listVariants: Variants = {
   hidden: { opacity: 0 },
@@ -21,7 +21,7 @@ const cardVariants: Variants = {
 };
 
 const Ukoly: React.FC = () => {
-  const { badgeDetails, badgeNames } = useOutletContext<{ badgeDetails: BadgeDetail[], badgeNames: string[] }>();
+  const { badgeDetails, badgeNames, players } = useOutletContext<{ badgeDetails: BadgeDetail[], badgeNames: string[], players: PlayerProfile[] }>();
 
   // Pokud úkol není v seznamu detailů, vytvoříme pro něj aspoň základní kartu
   const allBadges = badgeNames.map(name => {
@@ -49,11 +49,19 @@ const Ukoly: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        {allBadges.map((badge) => (
+        {allBadges.map((badge) => {
+          const completedCount = players.filter(p => p.completedBadges.includes(badge.name)).length;
+          const totalPlayers = players.length;
+          const percentage = totalPlayers > 0 ? (completedCount / totalPlayers) * 100 : 0;
+          
+          return (
           <motion.div key={badge.name} className="ukol-card" variants={cardVariants}>
             <div className="ukol-header">
               <div className="ukol-badge-icon">🦫</div>
               <h3 className="ukol-name">{badge.name}</h3>
+              <div className="ukol-completion-pill" style={{ background: `linear-gradient(90deg, rgba(100, 108, 255, 0.2) ${percentage}%, rgba(255, 255, 255, 0.05) ${percentage}%)` }}>
+                <span className="ukol-completion-text">{completedCount} z {totalPlayers} hotovo</span>
+              </div>
             </div>
             
             <div className="ukol-body">
@@ -68,7 +76,8 @@ const Ukoly: React.FC = () => {
               </div>
             </div>
           </motion.div>
-        ))}
+          );
+        })}
       </motion.div>
     </motion.div>
   );
