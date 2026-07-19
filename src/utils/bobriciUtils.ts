@@ -27,7 +27,7 @@ export interface PlayerProfile {
   description: string;
   photoUrl: string | null;
   completedBadges: string[];
-  currentTask: string | null;
+  currentTasks: string[];
   totalCompleted: number;
   rank?: number;
 }
@@ -61,14 +61,14 @@ export const getBobriciData = async () => {
 
   const players: PlayerProfile[] = filteredPlayers.map(row => {
     const completedBadges: string[] = [];
-    let currentTask: string | null = null;
+    const currentTasks: string[] = [];
 
     badgeNames.forEach(badge => {
       const status = row[badge]?.toUpperCase().trim();
       if (status === 'DONE' || status === 'ANO' || status === 'TRUE') {
         completedBadges.push(badge);
       } else if (status === 'WORKING') {
-        currentTask = badge;
+        currentTasks.push(badge);
       }
     });
 
@@ -77,7 +77,7 @@ export const getBobriciData = async () => {
       description: row.Popis || '',
       photoUrl: formatImageUrl(row.Fotka),
       completedBadges,
-      currentTask,
+      currentTasks,
       totalCompleted: completedBadges.length
     };
   });

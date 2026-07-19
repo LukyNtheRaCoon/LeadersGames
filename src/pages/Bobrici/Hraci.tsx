@@ -24,9 +24,11 @@ const Hraci: React.FC = () => {
                 
                 <div className="row-stat row-working">
                   <span className="row-label">Pracuje na:</span>
-                  <span className="row-value">
-                    {player.currentTask ? (
-                      <span className="working-pill">{player.currentTask}</span>
+                  <span className="row-value" style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                    {player.currentTasks && player.currentTasks.length > 0 ? (
+                      player.currentTasks.map(task => (
+                        <span key={task} className="working-pill">{task}</span>
+                      ))
                     ) : (
                       <span className="no-task-pill">Nic</span>
                     )}

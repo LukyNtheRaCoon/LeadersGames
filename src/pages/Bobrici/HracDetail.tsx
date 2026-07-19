@@ -64,12 +64,12 @@ const HracDetail: React.FC = () => {
           <div className="profile-section">
             <h3>Aktuální výzva</h3>
             <div className="current-challenge-box">
-              {player.currentTask ? (
+              {player.currentTasks && player.currentTasks.length > 0 ? (
                 <>
                   <span className="challenge-icon">🔥</span>
                   <div className="challenge-info">
                     <span className="challenge-label">Právě pracuje na:</span>
-                    <span className="challenge-name">{player.currentTask}</span>
+                    <span className="challenge-name">{player.currentTasks.join(', ')}</span>
                   </div>
                 </>
               ) : (
