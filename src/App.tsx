@@ -19,6 +19,7 @@ const PravidlaKissingKiller = React.lazy(() => import('./pages/PravidlaKissingKi
 const PravidlaPalermo = React.lazy(() => import('./pages/PravidlaPalermo'));
 const PravidlaAndele = React.lazy(() => import('./pages/PravidlaAndele'));
 const HraciTopLayout = React.lazy(() => import('./pages/HraciTopLayout'));
+const CelkovePoradi = React.lazy(() => import('./pages/CelkovePoradi'));
 
 // Simple loading fallback
 const LoadingFallback = () => (
@@ -36,6 +37,7 @@ function App() {
             <Link to="/" className="nav-logo">SPT 2. Turnus</Link>
             <div className="nav-links">
               <Link to="/">Domů</Link>
+              <Link to="/celkove-poradi">Celkové pořadí</Link>
               <Link to="/hraci">Hráči</Link>
               <Link to="/bobrici">Bobříci</Link>
               <Link to="/kissing-killer">Kissing Killer</Link>
@@ -50,6 +52,7 @@ function App() {
           <Suspense fallback={<LoadingFallback />}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/celkove-poradi" element={<CelkovePoradi />} />
               <Route path="/kissing-killer" element={<KissingKiller />} />
               <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
               <Route path="/kissing-killer/pravidla" element={<PravidlaKissingKiller />} />
