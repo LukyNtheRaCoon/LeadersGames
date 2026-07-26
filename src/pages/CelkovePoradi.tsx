@@ -67,7 +67,7 @@ const CelkovePoradi: React.FC = () => {
           const name = row['Jméno']?.trim();
           if (name) {
             if (!playersMap.has(name)) {
-              playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, total: 0, active: isPlayerActive(row) });
+              playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, extraBody: 0, total: 0, active: isPlayerActive(row) });
             }
             const p = playersMap.get(name)!;
             p.kissingKiller = Number(row['Vítězství']) || 0;
@@ -81,7 +81,7 @@ const CelkovePoradi: React.FC = () => {
           const name = row['Jméno']?.trim();
           if (name) {
             if (!playersMap.has(name)) {
-              playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, total: 0, active: isPlayerActive(row) });
+              playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, extraBody: 0, total: 0, active: isPlayerActive(row) });
             }
             const p = playersMap.get(name)!;
             p.palermoSurvivor = Number(row['Počet přežití']) || 0;
