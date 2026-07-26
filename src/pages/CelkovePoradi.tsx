@@ -19,12 +19,15 @@ interface TotalScore {
   kissingKiller: number;
   palermoSurvivor: number;
   palermoKiller: number;
+  extraBody: number;
   total: number;
   active: boolean;
 }
 
 const KISSING_KILLER_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmqUKCHAlxxLLpWDcnXtORybXgZ5VMPGChg6xJaiLYKe1LmJQ9m27Oop-9DnERjS0edGeXZLr7xU0k/pub?output=csv';
 const PALERMO_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmqUKCHAlxxLLpWDcnXtORybXgZ5VMPGChg6xJaiLYKe1LmJQ9m27Oop-9DnERjS0edGeXZLr7xU0k/pub?gid=1354082749&single=true&output=csv';
+// URL pro Extra body z nové tabulky
+const EXTRA_BODY_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmqUKCHAlxxLLpWDcnXtORybXgZ5VMPGChg6xJaiLYKe1LmJQ9m27Oop-9DnERjS0edGeXZLr7xU0k/pub?gid=374670511&single=true&output=csv';
 
 const CelkovePoradi: React.FC = () => {
   const [data, setData] = useState<TotalScore[]>([]);
@@ -34,10 +37,11 @@ const CelkovePoradi: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [bobriciData, kissingKillerData, palermoData] = await Promise.all([
+        const [bobriciData, kissingKillerData, palermoData, extraBodyData] = await Promise.all([
           getBobriciData(),
           fetchSheetData<any>(KISSING_KILLER_URL),
-          fetchSheetData<any>(PALERMO_URL)
+          fetchSheetData<any>(PALERMO_URL),
+          fetchSheetData<any>(EXTRA_BODY_URL).catch(() => []) // Catch pro případ, že URL ještě není validní
         ]);
 
         const playersMap = new Map<string, TotalScore>();
@@ -51,6 +55,7 @@ const CelkovePoradi: React.FC = () => {
               kissingKiller: 0,
               palermoSurvivor: 0,
               palermoKiller: 0,
+              extraBody: 0,
               total: 0,
               active: true
             });
@@ -85,9 +90,23 @@ const CelkovePoradi: React.FC = () => {
           }
         });
 
+        // Zpracování Extra bodů
+        if (extraBodyData && extraBodyData.length > 0) {
+          extraBodyData.forEach((row: any) => {
+            const name = row['Jméno']?.trim();
+            if (name) {
+              if (!playersMap.has(name)) {
+                playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, extraBody: 0, total: 0, active: isPlayerActive(row) });
+              }
+              const p = playersMap.get(name)!;
+              p.extraBody = Number(row['Body']) || Number(row['Extra body']) || 0;
+            }
+          });
+        }
+
         // Výpočet celkových bodů
         const scores = Array.from(playersMap.values()).map(p => {
-          p.total = p.bobrici + p.kissingKiller + p.palermoSurvivor + (p.palermoKiller * 3);
+          p.total = p.bobrici + p.kissingKiller + p.palermoSurvivor + (p.palermoKiller * 3) + p.extraBody;
           return p;
         });
 
@@ -113,7 +132,7 @@ const CelkovePoradi: React.FC = () => {
     <div className="game-page">
       <h1>Celkové Pořadí</h1>
       <p className="page-intro" style={{ marginBottom: '2rem' }}>
-        Tato tabulka sčítá body ze všech her: Bobříci (1 bod), Kissing Killer vítězství (1 bod), Palermo přežití (1 bod), Palermo výhra za killera (3 body).
+        Tato tabulka sčítá body ze všech her: Bobříci (1 bod), Kissing Killer vítězství (1 bod), Palermo přežití (1 bod), Palermo výhra za killera (3 body) a navíc i Extra body.
       </p>
 
       <motion.div initial="hidden" animate="visible" variants={containerVariants}>
@@ -127,6 +146,7 @@ const CelkovePoradi: React.FC = () => {
                 <th>Kissing Killer</th>
                 <th>Palermo (Přežití)</th>
                 <th>Palermo (Killer)</th>
+                <th>Extra body</th>
                 <th>Celkem bodů</th>
               </tr>
             </thead>
@@ -144,6 +164,7 @@ const CelkovePoradi: React.FC = () => {
                   <td>{player.kissingKiller}</td>
                   <td>{player.palermoSurvivor}</td>
                   <td>{player.palermoKiller}</td>
+                  <td>{player.extraBody}</td>
                   <td style={{ fontWeight: 'bold', color: '#646cff', fontSize: '1.1em' }}>{player.total}</td>
                 </tr>
               ))}
