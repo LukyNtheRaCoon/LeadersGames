@@ -20,6 +20,7 @@ const PravidlaPalermo = React.lazy(() => import('./pages/PravidlaPalermo'));
 const PravidlaAndele = React.lazy(() => import('./pages/PravidlaAndele'));
 const HraciTopLayout = React.lazy(() => import('./pages/HraciTopLayout'));
 const CelkovePoradi = React.lazy(() => import('./pages/CelkovePoradi'));
+const Feedback = React.lazy(() => import('./pages/Feedback'));
 
 // Simple loading fallback
 const LoadingFallback = () => (
@@ -44,6 +45,7 @@ function App() {
               <Link to="/palermo">Palermo</Link>
               <Link to="/andele">Andělé</Link>
               <Link to="/sazky">Sázky</Link>
+              <Link to="/feedback">Feedback</Link>
             </div>
           </nav>
         </header>
@@ -57,6 +59,7 @@ function App() {
               <Route path="/kissing-killer/game" element={<KissingKillerGame />} />
               <Route path="/kissing-killer/pravidla" element={<PravidlaKissingKiller />} />
               <Route path="/sazky" element={<Sazky />} />
+              <Route path="/feedback" element={<Feedback />} />
               <Route path="/andele" element={<Andele />} />
               <Route path="/andele/pravidla" element={<PravidlaAndele />} />
               <Route path="/palermo" element={<Palermo />} />
