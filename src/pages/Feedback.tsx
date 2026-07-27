@@ -100,6 +100,7 @@ const Feedback: React.FC = () => {
               style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #333', backgroundColor: '#2a2a2a', color: 'white' }}
             >
               <option value="Celkově">Celkově (Všechny hry)</option>
+              <option value="Webová aplikace">Webová aplikace</option>
               <option value="Bobříci">Bobříci</option>
               <option value="Kissing Killer">Kissing Killer</option>
               <option value="Palermo">Palermo</option>
