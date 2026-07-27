@@ -70,7 +70,7 @@ const CelkovePoradi: React.FC = () => {
               playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, extraBody: 0, total: 0, active: isPlayerActive(row) });
             }
             const p = playersMap.get(name)!;
-            p.kissingKiller = Number(row['Vítězství']) || 0;
+            p.kissingKiller = Number(String(row['Vítězství'] || '0').replace(',', '.')) || 0;
             // Aktualizace stavu aktivity, pokud je v KK uveden jako neaktivní
             if (!isPlayerActive(row)) p.active = false;
           }
@@ -99,7 +99,7 @@ const CelkovePoradi: React.FC = () => {
                 playersMap.set(name, { name, bobrici: 0, kissingKiller: 0, palermoSurvivor: 0, palermoKiller: 0, extraBody: 0, total: 0, active: isPlayerActive(row) });
               }
               const p = playersMap.get(name)!;
-              p.extraBody = Number(row['Body']) || Number(row['Extra body']) || 0;
+              p.extraBody = Number(String(row['Body'] || '').replace(',', '.')) || Number(String(row['Extra body'] || '').replace(',', '.')) || 0;
             }
           });
         }
@@ -161,11 +161,11 @@ const CelkovePoradi: React.FC = () => {
                     </span>
                   </td>
                   <td>{player.bobrici}</td>
-                  <td>{player.kissingKiller}</td>
+                  <td>{player.kissingKiller.toLocaleString('cs-CZ')}</td>
                   <td>{player.palermoSurvivor}</td>
                   <td>{player.palermoKiller}</td>
-                  <td>{player.extraBody}</td>
-                  <td style={{ fontWeight: 'bold', color: '#646cff', fontSize: '1.1em' }}>{player.total}</td>
+                  <td>{player.extraBody.toLocaleString('cs-CZ')}</td>
+                  <td style={{ fontWeight: 'bold', color: '#646cff', fontSize: '1.1em' }}>{player.total.toLocaleString('cs-CZ')}</td>
                 </tr>
               ))}
             </tbody>

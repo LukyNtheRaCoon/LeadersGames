@@ -32,7 +32,11 @@ const KissingKiller: React.FC = () => {
         // Seřadit podle vítězství sestupně
         const sortedData = parsedData
           .filter(row => row.Jméno) // Odstranit prázdné řádky
-          .sort((a, b) => Number(b.Vítězství) - Number(a.Vítězství));
+          .sort((a, b) => {
+            const valA = Number(String(a.Vítězství || '0').replace(',', '.')) || 0;
+            const valB = Number(String(b.Vítězství || '0').replace(',', '.')) || 0;
+            return valB - valA;
+          });
         setData(sortedData);
         setLoading(false);
       })
@@ -78,7 +82,7 @@ const KissingKiller: React.FC = () => {
                       {!active && <span className="status-badge inactive">Nepřítomen</span>}
                     </span>
                   </td>
-                  <td>{player.Vítězství}</td>
+                  <td>{String(player.Vítězství).replace('.', ',')}</td>
                 </tr>
               );
             })}
