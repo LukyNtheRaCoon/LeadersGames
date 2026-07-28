@@ -149,12 +149,12 @@ const Sazky: React.FC = () => {
         // Admin spočítá kurzy v momentě zapnutí a ty se uloží na server
         const data = await fetchSheetData<PlayerScore>(PLAYERS_SHEET_URL);
         const players = data.filter(row => row.Jméno?.trim());
-        const victories = players.map(p => Number(p.Vítězství) || 0);
+        const victories = players.map(p => Number(String(p.Vítězství || '0').replace(',', '.')) || 0);
         const maxVictories = Math.max(...victories, 0);
         
         const newOdds: Record<string, number> = {};
         players.forEach(p => {
-          const v = Number(p.Vítězství) || 0;
+          const v = Number(String(p.Vítězství || '0').replace(',', '.')) || 0;
           let calculatedOdds = 1.2 + (maxVictories - v) * 0.6 + 0.6;
           newOdds[p.Jméno.trim().toLowerCase()] = parseFloat(calculatedOdds.toFixed(2));
         });
